@@ -3,15 +3,21 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { ILoginFormValues } from './types';
 import * as Yup from 'yup';
+import {
+  EMAIL_DOES_NOT_MATCH_FORMAT,
+  REQUIRED_FIELD,
+  MINIMUM_NUMBER_OF_CHARACTERS,
+  REQUIRED_PASSWORD_CHARACTERS,
+} from '../../constants';
 
 const LoginFormSchema = Yup.object().shape({
   email: Yup.string()
-    .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Email не соответствует формату')
-    .required('Поле обязательно для заполнения'),
+    .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, EMAIL_DOES_NOT_MATCH_FORMAT)
+    .required(REQUIRED_FIELD),
   password: Yup.string()
-    .min(6, 'Пароль должен состоять минимум из 6 символов')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/, 'Пароль должен содержать цифры, буквы в нижнем и верхнем регистре')
-    .required('Поле обязательно для заполнения'),
+    .min(6, MINIMUM_NUMBER_OF_CHARACTERS)
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/, REQUIRED_PASSWORD_CHARACTERS)
+    .required(REQUIRED_FIELD),
 });
 
 function LoginForm() {
